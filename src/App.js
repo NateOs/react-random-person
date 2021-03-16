@@ -15,6 +15,30 @@ function App() {
   const [title, setTitle] = useState('name')
   const [value, setValue] = useState('random person')
 
+  const getPerson = async () => {
+    //destructuring values of the returned object
+    const response = await fetch(url)
+    const data = response.json()
+    const person = data.results[0]
+    const { phone, email } = person
+    const { large: image} = person.picture
+    const { login: { password } } = person
+    const { first, last } = person.name
+    const { dob: { age }} = person
+    const { street: { number, name }} = person.location
+    
+    //creating new object for easy reference to data
+    const newPerson = {
+      image,
+      phone,
+      email,
+      password,
+      age,
+      street: `${number}, ${name}`,
+      name: `${first} ${last}`
+    }
+  }
+
   const handleValue = (e) => {
     console.log(e.target)
   }
